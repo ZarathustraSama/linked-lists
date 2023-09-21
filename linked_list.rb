@@ -52,7 +52,14 @@ class LinkedList
   end
 
   def at(index)
-    # returns the node at the given index
+    # Returns the node at the given index
+    current_index = 0
+    current_node = @head
+    until current_index == index || current_node.nil?
+      current_index += 1
+      current_node = current_node.next_node
+    end
+    current_node
   end
 
   def pop
