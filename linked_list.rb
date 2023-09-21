@@ -40,11 +40,17 @@ class LinkedList
   end
 
   def head
-    # returns the first node in the list
+    # Returns the first node in the list
+    @head
   end
 
   def tail
-    # returns the last node in the list
+    # Returns the last node in the list
+    tail = @head
+    until tail.next_node.nil?
+      tail = tail.next_node
+    end
+    tail
   end
 
   def at(index)
