@@ -92,8 +92,8 @@ class LinkedList
   end
 
   def to_s
-    # represent your LinkedList objects as strings, so you can print them out and preview them in the console. 
-    # The format should be: ( value ) -> ( value ) -> ( value ) -> nil
+    # Represent LinkedList objects as strings, so you can print them out and preview them in the console. 
+    # The format is: ( value ) -> ( value ) -> ( value ) -> nil
     linked_list_string = ""
     current_node = @head
     until current_node.nil?
@@ -105,11 +105,22 @@ class LinkedList
   end
 
   def insert_at(value, index)
-    # inserts a new node with the provided value at the given index
+    # Inserts a new node with the provided value at the given index
+    previous_node = self.at(index - 1)
+    next_node = self.at(index)
+    new_node = Node.new(value)
+
+    previous_node.next_node = new_node
+    new_node.next_node = next_node
   end
 
   def remove_at(value, index)
-    # removes the node at the given index
+    # Removes the node at the given index
+    previous_node = self.at(index - 1)
+    node_to_remove = self.at(index)
+
+    previous_node.next_node = node_to_remove.next_node
+    node_to_remove = nil
   end
 end
 
