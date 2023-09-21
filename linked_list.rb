@@ -109,6 +109,14 @@ class LinkedList
     previous_node = self.at(index - 1)
     next_node = self.at(index)
     new_node = Node.new(value)
+    if @head.nil?
+      @head = next_node
+      return
+    end
+    if previous_node.nil? && next_node.nil?
+      return puts 'Please stay inside the boundaries of your list!'
+      return puts 'Use #append or #prepend to add nodes to the tail or head of the list!'
+    end
 
     previous_node.next_node = new_node
     new_node.next_node = next_node
@@ -116,8 +124,16 @@ class LinkedList
 
   def remove_at(value, index)
     # Removes the node at the given index
+    return if self.at(index).nil?
+
     previous_node = self.at(index - 1)
     node_to_remove = self.at(index)
+
+    if node_to_remove == head
+      @head = @head.next_node
+      node_to_remove = nil
+      return
+    end
 
     previous_node.next_node = node_to_remove.next_node
     node_to_remove = nil
