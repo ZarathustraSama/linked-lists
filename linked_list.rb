@@ -47,7 +47,7 @@ class LinkedList
   def tail
     # Returns the last node in the list
     tail = @head
-    tail = tail.next_node until tail.next_node.nil?
+    tail = tail.next_node until tail.next_node.nil? || @head.nil?
     tail
   end
 
@@ -63,15 +63,32 @@ class LinkedList
   end
 
   def pop
-    # removes the last element from the list
+    # Removes the last element from the list
+    tail = nil
   end
 
   def contains?(value)
-    # returns true if the passed in value is in the list and otherwise returns false
+    # Returns true if the passed in value is in the list and otherwise returns false
+    current_node = @head
+    until current_node.nil?
+      return true if current_node.value == value
+      
+      current_node = current_node.next_node
+    end
+    false
   end
 
   def find(value)
-    # returns the index of the node containing value, or nil if not found
+    # Returns the index of the node containing value, or nil if not found
+    current_index = 0
+    current_node = @head
+    until current_node.nil?
+      return current_index if current_node.value == value
+
+      current_index += 1
+      current_node = current_node.next_node
+    end
+    nil
   end
 
   def to_s
