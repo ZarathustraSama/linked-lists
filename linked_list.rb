@@ -1,3 +1,6 @@
+# frozen-string-literal: true
+
+# The implementation of a Linked List data structure (albeit  kind of useless for Ruby)
 class LinkedList
   attr_accessor :head
 
@@ -39,11 +42,6 @@ class LinkedList
     count
   end
 
-  def head
-    # Returns the first node in the list
-    @head
-  end
-
   def tail
     # Returns the last node in the list
     tail = @head
@@ -64,7 +62,7 @@ class LinkedList
 
   def pop
     # Removes the last element from the list
-    tail = nil
+    self.tail = nil
   end
 
   def contains?(value)
@@ -72,7 +70,7 @@ class LinkedList
     current_node = @head
     until current_node.nil?
       return true if current_node.value == value
-      
+
       current_node = current_node.next_node
     end
     false
@@ -92,9 +90,9 @@ class LinkedList
   end
 
   def to_s
-    # Represent LinkedList objects as strings, so you can print them out and preview them in the console. 
+    # Represent LinkedList objects as strings, so you can print them out and preview them in the console.
     # The format is: ( value ) -> ( value ) -> ( value ) -> nil
-    linked_list_string = ""
+    linked_list_string = ''
     current_node = @head
     until current_node.nil?
       linked_list_string.concat("( #{current_node.value} ) -> ")
@@ -106,28 +104,29 @@ class LinkedList
 
   def insert_at(value, index)
     # Inserts a new node with the provided value at the given index
-    previous_node = self.at(index - 1)
-    next_node = self.at(index)
+    previous_node = at(index - 1)
+    next_node = at(index)
     new_node = Node.new(value)
     if @head.nil?
       @head = next_node
       return
     end
     if previous_node.nil? && next_node.nil?
-      return puts 'Please stay inside the boundaries of your list!'
-      return puts 'Use #append or #prepend to add nodes to the tail or head of the list!'
+      puts 'Please stay inside the boundaries of your list!'
+      puts 'Use #append or #prepend to add nodes to the tail or head of the list!'
+      return
     end
 
     previous_node.next_node = new_node
     new_node.next_node = next_node
   end
 
-  def remove_at(value, index)
+  def remove_at(index)
     # Removes the node at the given index
-    return if self.at(index).nil?
+    return if at(index).nil?
 
-    previous_node = self.at(index - 1)
-    node_to_remove = self.at(index)
+    previous_node = at(index - 1)
+    node_to_remove = at(index)
 
     if node_to_remove == head
       @head = @head.next_node
@@ -140,6 +139,7 @@ class LinkedList
   end
 end
 
+# The node object class used by the linked list
 class Node
   attr_accessor :value, :next_node
 
