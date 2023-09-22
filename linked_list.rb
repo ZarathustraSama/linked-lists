@@ -1,4 +1,4 @@
-# The implementation of a Linked List data structure (albeit  kind of useless for Ruby)
+# The implementation of a Linked List data structure
 class LinkedList
   attr_accessor :head
 
@@ -8,25 +8,12 @@ class LinkedList
 
   def append(value)
     # Adds a new node containing value to the end of the list
-    if @head.nil?
-      @head = Node.new(value)
-    else
-      current_node = @head
-      current_node = current_node.next_node until current_node.next_node.nil?
-      current_node.next_node = Node.new(value)
-    end
+    @head.nil? ? prepend(value) : tail.next_node = Node.new(value)
   end
 
   def prepend(value)
     # Adds a new node containing value to the start of the list
-    if @head.nil?
-      @head = Node.new(value)
-    else
-      current_head = @head
-      new_head = Node.new(value)
-      new_head.next_node = current_head
-      @head = new_head
-    end
+    @head = @head.nil? ? Node.new(value) : Node.new(value, @head)
   end
 
   def size
@@ -60,7 +47,11 @@ class LinkedList
 
   def pop
     # Removes the last element from the list
-    self.tail = nil
+    return if @head.nil?
+
+    node = @head
+    node = node.next_node until node.next_node.nil? || node.next_node.next_node.nil?
+    node.next_node = nil
   end
 
   def contains?(value)
@@ -97,7 +88,6 @@ class LinkedList
       current_node = current_node.next_node
     end
     linked_list_string.concat('nil')
-    linked_list_string
   end
 
   def insert_at(value, index)
@@ -106,30 +96,17 @@ class LinkedList
 
     if index.zero?
       prepend(value)
-    elsif index == (size - 1)
-      append(value)
     else
-      new_node = Node.new(value)
-      previous_node = at(index - 1)
-      next_node = at(index)
-      previous_node.next_node = new_node
-      new_node.next_node = next_node
+      at(index - 1).next_node = Node.new(value, at(index))
     end
   end
 
   def remove_at(index)
     # Removes the node at the given index
-    return if at(index).nil?
+    return puts 'Error: out of bounds not allowed' if at(index).nil?
 
-    previous_node = at(index - 1)
-    node_to_remove = at(index)
-
-    if node_to_remove == @head
-      @head = @head.next_node
-    else
-      previous_node.next_node = node_to_remove.next_node
-    end
-    node_to_remove = nil
+    # Basically we pass the reference to the node next to the one we are deleting to the node before it
+    at(index - 1).next_node = at(index).next_node
   end
 end
 
