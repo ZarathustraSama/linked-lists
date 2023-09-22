@@ -124,7 +124,7 @@ class LinkedList
     previous_node = at(index - 1)
     node_to_remove = at(index)
 
-    if node_to_remove == head
+    if node_to_remove == @head
       @head = @head.next_node
     else
       previous_node.next_node = node_to_remove.next_node
