@@ -104,21 +104,19 @@ class LinkedList
 
   def insert_at(value, index)
     # Inserts a new node with the provided value at the given index
-    previous_node = at(index - 1)
-    next_node = at(index)
-    new_node = Node.new(value)
-    if @head.nil?
-      @head = next_node
-      return
-    end
-    if previous_node.nil? && next_node.nil?
-      puts 'Please stay inside the boundaries of your list!'
-      puts 'Use #append or #prepend to add nodes to the tail or head of the list!'
-      return
-    end
+    return puts 'Error: out of bounds not allowed' if index.negative? || index > (size - 1)
 
-    previous_node.next_node = new_node
-    new_node.next_node = next_node
+    if index.zero?
+      prepend(value)
+    elsif index == (size - 1)
+      append(value)
+    else
+      new_node = Node.new(value)
+      previous_node = at(index - 1)
+      next_node = at(index)
+      previous_node.next_node = new_node
+      new_node.next_node = next_node
+    end
   end
 
   def remove_at(index)
@@ -130,11 +128,9 @@ class LinkedList
 
     if node_to_remove == head
       @head = @head.next_node
-      node_to_remove = nil
-      return
+    else
+      previous_node.next_node = node_to_remove.next_node
     end
-
-    previous_node.next_node = node_to_remove.next_node
     node_to_remove = nil
   end
 end
