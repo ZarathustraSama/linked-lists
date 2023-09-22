@@ -1,5 +1,3 @@
-# frozen-string-literal: true
-
 # The implementation of a Linked List data structure (albeit  kind of useless for Ruby)
 class LinkedList
   attr_accessor :head
